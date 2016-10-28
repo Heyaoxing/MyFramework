@@ -32,6 +32,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Autofac, Version=4.1.1.0, Culture=neutral, PublicKeyToken=17863af14b0044da, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Autofac.4.1.1\lib\net45\Autofac.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -46,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Common\Common.DataEntity\Common.DataEntity.csproj">
@@ -67,6 +72,14 @@
     <ProjectReference Include="..\..\Data\Data.Repositories\Data.Repositories.csproj">
       <Project>{1526aafb-d4e8-480d-9002-7845a6031214}</Project>
       <Name>Data.Repositories</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Services\IServices.Demo\IServices.Demo.csproj">
+      <Project>{7207ad13-3a0d-4b15-945b-00551ea0aeaf}</Project>
+      <Name>IServices.Demo</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Services\Services.Demo\Services.Demo.csproj">
+      <Project>{8ec55d6c-2dd9-4f2e-b1d9-ceeb25bbe29e}</Project>
+      <Name>Services.Demo</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Autofac;
 using Data.Entities;
 using Data.Repositories;
+using IServices.Demo;
 using MySqlSugar;
 
 namespace Test.Console.Data
@@ -15,15 +17,14 @@ namespace Test.Console.Data
         {
             try
             {
-                T_exclude_websitesRepository repository = new T_exclude_websitesRepository();
-                repository.Insert(new T_exclude_websites()
+                var builder = new ContainerBuilder();
+                builder.RegisterType<Services.Demo.Test>();
+                builder.RegisterType<T_exclude_websitesRepository>().As<IT_exclude_websitesRepository>();
+                using (var container = builder.Build())
                 {
-                    WebSite_Name="asddd",
-                    WebSite_Url="dsasdfgf",
-                    create_time=DateTime.Now,
-                    is_erased=0
-                });
-                var model= repository.Queryable().Where(p => p.ID==1).FirstOrDefault();
+                    var manager = container.Resolve<Services.Demo.Test>();
+                    manager.Method();
+                }
             }
             catch (Exception exception)
             {
