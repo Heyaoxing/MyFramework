@@ -23,7 +23,8 @@ namespace Test.Console.Data
                     create_time=DateTime.Now,
                     is_erased=0
                 });
-                var model= repository.Queryable().Where(p => p.ID==1).FirstOrDefault();
+                var model= repository.Queryable().Where(p => p.ID==4).FirstOrDefault();
+                System.Console.WriteLine(model.WebSite_Name);
             }
             catch (Exception exception)
             {
