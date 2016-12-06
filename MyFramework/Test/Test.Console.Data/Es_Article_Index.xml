@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--此格式用于生成Es实体和数据仓库-->
+
+<!--设置索引名称.index仅有一个,其他的都可以多个-->
+
+<!--设置类型名称-->
+<!--设置字段.name表示对象名称,esname表示在es库中创建的名称,isanalyzed表示是否使用分析器,isset表示对象是否封装set属性,isget表示对象是否封装get属性,descript表示对象描述-->
+<!--esname可以不填,默认esname的值为name值的小写;IsAnalyzed默认为false;isset和isget默认为true-->
+
+<index name="articles">
+    <type name="article">
+      <field name="Id" esname="Id" type="int" isanalyzed="true" isset="true" isget="true" descript="id值"/>
+    </type>
+</index>

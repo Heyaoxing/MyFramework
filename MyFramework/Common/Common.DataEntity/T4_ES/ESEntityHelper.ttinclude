@@ -1,0 +1,68 @@
+﻿<#@ IntelliSenseLanguage processor="tangibleT4Editor" language="C#" #>
+ <#@ assembly name="System.Core"#>
+ <#@ assembly name="System.Data"#>
+ <#@ import namespace="System" #>
+ <#@ import namespace="System.Data" #>
+ <#@ import namespace="System.Collections.Generic" #>
+ <#@ import namespace="System.Linq" #>
+
+ <#+ 
+ public class ESEntityHelper{
+	  //数据类型转换
+	  public static string ConvertToEs(string typeString)
+	  {
+		  string convertType=string.Empty;
+		  if(string.IsNullOrEmpty(typeString))
+			  return convertType;
+
+		  typeString=typeString.ToLower();
+		  switch(typeString)
+		  {
+			case "string":
+				  convertType="String";
+			  break;
+			case "datetime":
+				  convertType="Date";
+			  break;
+			case "Boolean":
+			case "bool":
+				  convertType="Boolean";
+			  break;
+			case "object":
+				  convertType="Nested";
+			  break;
+			case "decimal":
+			case "float":
+			case "int":
+			case "int16":
+			case "int32":
+			case "int64":
+			case "short":
+			case "byte":
+				  convertType="Number";
+			  break;
+			default:
+				  convertType=string.Empty;
+		      break;
+          }
+		  return convertType;
+      }
+
+
+	   //转换为布尔类型
+	  public static bool ConvertToBool(string typeString)
+	  {
+		  bool result=false;
+		   if(string.IsNullOrEmpty(typeString))
+			  return result;
+
+		   typeString=typeString.ToLower();
+		   if(typeString=="false"){
+			   result=false;
+           }else if(typeString=="true"){
+			   result=true;
+           }
+		   return result;
+      }
+ }
+  #>

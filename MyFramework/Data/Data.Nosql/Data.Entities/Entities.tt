@@ -1,0 +1,57 @@
+﻿<#@ template debug="true" hostSpecific="true" #>
+<#@ output extension=".cs" #>
+<#@ Assembly Name="System.Core" #>
+<#@ Assembly Name="System.Windows.Forms" #>
+<#@ import namespace="System" #>
+<#@ import namespace="System.IO" #>
+<#@ import namespace="System.Diagnostics" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Collections" #>
+<#@ import namespace="System.Collections.Generic" #> 
+<#@ include file="EF.Utility.CS.ttinclude"#>
+<#@ include file="$(SolutionDir)Common\Common.DataEntity\T4_ES\ESEntityHelper.ttinclude"#> 
+<#
+		EntityFrameworkTemplateFileManager fileManager = EntityFrameworkTemplateFileManager.Create(this);
+		XmlDocument doc = new XmlDocument();
+		string absolutePath = Host.ResolvePath("Es_Article_Index.xml");                
+		doc.Load(absolutePath);
+		foreach (XmlNode data in doc.SelectNodes("/index/type"))
+		{
+			string className = data.Attributes["name"].InnerText;
+			fileManager.StartNewFile(className + ".cs"); 
+		
+#>
+using Nest;
+namespace ES.Data.Entities
+{
+  [ElasticsearchType(Name = "<#=className#>", IdProperty = "Id")]
+  public class <#= className #>
+  {
+     <# 
+	   foreach(XmlNode filed in data.SelectNodes("field"))
+	   {
+			string name = filed.Attributes["name"].InnerText;
+			string esname = filed.Attributes["esname"]==null?"":filed.Attributes["esname"].InnerText;
+			string type = filed.Attributes["type"].InnerText;
+			string isanalyzed = filed.Attributes["isanalyzed"]==null?"true":filed.Attributes["isanalyzed"].InnerText;
+			string descript = filed.Attributes["descript"]==null?"":filed.Attributes["descript"].InnerText;
+            string esType= ESEntityHelper.ConvertToEs(type);
+	  #>
+
+	    /// <summary>
+        /// <#=descript#>
+        /// </summary>
+		[<#=esType  #>(Name="<#=(string.IsNullOrWhiteSpace(esname)?name:esname).ToLower()#>")]
+		public <#=type#>  <#=name#> { set; get; }
+
+
+		<#
+	    }
+		#>
+
+  }
+}
+ <# 
+        }
+		fileManager.Process();
+  #>

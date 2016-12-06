@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 using Autofac;
 using Data.Entities;
 using Data.Repositories;
@@ -17,10 +18,13 @@ namespace Test.Console.Data
         {
             try
             {
-                var builder = new ContainerBuilder();
-                builder.RegisterType<Services.Demo.Test>();
-                builder.RegisterType<T_exclude_websitesRepository>().As<IT_exclude_websitesRepository>();
-               
+                
+                XmlDocument doc = new XmlDocument();
+                doc.Load("Es_Article_Index.xml");
+                foreach (XmlNode data in doc.SelectNodes("/index/type"))
+                {
+                    string className = data.Attributes["name"].InnerText;
+                }
             }
             catch (Exception exception)
             {
